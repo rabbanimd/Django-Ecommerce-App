@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+ {% load counter_tag %}
+{% block body %}
+    {% block navbar %}{%  include "navbar.html" %}{% endblock %}
+  <div class="mt-5" > {%  if messages %}
+    {% for message in messages %}
+   <div class="alert alert-{{ message.tags }}" role="alert">
+       {{ message }}
+   </div>
+     {% endfor %}
+  {% endif %}
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <img src="{{ object.img.url }}" class="img-fluid" alt="">
+
+        </div>
+        <div class="col-md-6 mb-4 ">
+            <p class="lead font-weight-bold">{{ object.title }}</p>
+            <p>price:   ${{ object.price }}</p>
+            <p>{{ object.Description }}</p>
+         {% if user.id is not None%}
+            <a  href="{{ object.get_add_item_url }}" class="btn btn-primary btn-md my-0 p">
+                   Add to cart <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+         {% else %}
+              <a  href="{% url  'login' %}" class="btn btn-primary btn-md my-0 p">
+                   Add to cart <i class="fas fa-shopping-cart ml-1"></i>
+         {% endif %}
+            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-0 p">
+              Remove from cart
+            </a>
+
+          </div>
+          <!--Content-->
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <hr>
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+
+          <h4 class="my-4 h4">Related item</h4>
+
+          <p>
+Product description
+
+When it comes to style and comfort, Rupa Frontline has always been the nation’s favourite. For years together, the Frontline range has set benchmarks in the innerwear segment and it continues to do so even today. Made from 100% super-combed cotton, the Frontline range is designed to keep men comfortable and fresh throughout the day. The range of briefs includes – Expando briefs, Front Open briefs and Xing briefs, with Frontline Drawers that offer pure cotton absorbency and firm, flexi-fit design. The range of vests is available in Ribbed, Interlock, Sinker and Gym vests variants. Then there’s Frontline Kidz, a range of premium vests and briefs for boys with great sweat-absorbency. Every design in the range is contemporary and stylish, in sync with the latest global trends. So, we can comfortably say Rupa Frontline leads from the front.
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+
+          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+{#     {% block jquery %}#}
+{#        <script>#}
+{#            console.log('working');#}
+{#            if(localStorage.getItem('cart')==null)#}
+{#            {#}
+{#                var cart={};#}
+{#            }#}
+{#            else#}
+{#                {#}
+{#                cart=JSON.parse(localStorage.getItem('cart'));#}
+{#                 document.getElementById('cart-total').innerHTML=Object.keys(cart).length;#}
+{#                 }#}
+{#            $('.cart').click(function () {#}
+{#                    console.log('clicked');#}
+{#                    var ItemId=this.id.toString();#}
+{#                    console.log(ItemId);#}
+{##}
+{#            if (cart[ItemId] !=undefined)#}
+{#            {#}
+{#                cart[ItemId]=cart[ItemId]+1;#}
+{#            }#}
+{#            else{#}
+{#                cart[ItemId]=1;#}
+{#            }#}
+{#            console.log(cart);#}
+{#            localStorage.setItem('cart',JSON.stringify(cart));#}
+            {#document.getElementById('cart-total').innerHTML=Object.keys(cart).length;#}
+{#             });#}
+{#        </script>#}
+{#    {% endblock %}#}
+
+{% endblock body %}

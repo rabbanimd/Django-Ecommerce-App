@@ -1,0 +1,76 @@
+{% load static %}
+{% load counter_tag %}
+{% block body %}
+
+<nav class="navbar navbar-expand-lg  fixed-top navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+              <a class="nav-link" href="/">home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Contact <span class="sr-only">(current)</span></a>
+            </li>
+            {% if user.is_authenticated %}
+            <li><b class="nav-link">Welcome {{user.username}}<span class="sr-only">(current)</span></b></li>
+               <li class="nav-item active">
+               <a class="nav-link" href="{% url 'logout' %}">Log Out <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'register' %}">register <span class="sr-only">(current)</span></a>
+            </li>
+         <li class="nav-item active">
+                  <form class="inline" action="account/login" method="POST">
+                      {% csrf_token %}
+                      <input type="text" placeholder="Username" name="username"  style="width:130px;">
+                      <input type="text" placeholder="Password" name="password1" style="width:130px;">
+                    <button class="btn btn-primary" type="submit">Login</button>
+                      <div>
+                           {% if messages %}
+                           <ul class="message">
+                                {% for message in messages %}
+                                    {{ message}}
+                                {% endfor %}
+                            </ul>
+                           </div>
+                           {% endif %}
+
+                 </form>
+
+              </li>
+          {% endif %}
+      </ul>
+        <nav>
+  <ul class="menu">
+    <li style=" width:90px; height:40px;float:left;inline:block;">Category
+        {% for cat in categories %}
+            <ul class="sub-menu">
+              <li {% if category.slug == cat.slug %}  {% endif %} >
+                  <a style="text-decoration: none; color:white;" href="{{ cat.get_absolute_url }}">{{ cat.title }}</a></li>
+            </ul>{% endfor %}
+    </li>
+    <li style=" width:90px; height:40px;float:left;inline:block;">Brands
+      <ul class="sub-menu">
+        <li>Lakme</li>
+        <li>loreal</li>
+        <li>Huda Beauty</li>
+        <li>M.A.C</li>
+        <li>Compare</li>
+      </ul>
+    </li>
+</nav>
+{% if user.is_authenticated %}
+	     	<a href="{% url 'cart:order_details' %}">
+	    		<img  id="cart-count" class="fa fa-shopping-cart">
+	    	</a>
+	    	<p id="cart-total"> {{ request.user| count_item }} </p>
+        {% endif %}
+        <form class="form-inline my-2 my-lg-0" method="POST" action="/search">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2" id="search" type="search"  style="" name='query' value="query" placeholder="Search product..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i>Search</button>
+        </form>
+    </div>
+</nav>
+{% endblock body %}

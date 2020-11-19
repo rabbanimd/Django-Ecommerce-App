@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% load static %}
+{#{% load crispy_forms_tags %}#}
+{% block body %}
+    {% block navbar %}{%  include "navbar.html" %}{% endblock %}
+    <div class="row py-5">
+<!--{#                    <div class="col-md-4 order-md-2 mb-4">#}-->
+<!--{#                        <h4 class="d-flex justify-content-between align-items-center mb-3">#}-->
+<!--{#                            <span class="text-muted">Your cart</span>#}-->
+<!--{#                            <span class="badge badge-secondary badge-pill">3</span>#}-->
+<!--{#                        </h4>#}-->
+<!--{#                        <ul class="list-group mb-3">#}-->
+<!--{#                            <li class="list-group-item d-flex justify-content-between lh-condensed">#}-->
+<!--{#                                <div>#}-->
+<!--{#                                    <h6 class="my-0">Product name</h6>#}-->
+<!--{#                                    <small class="text-muted">Brief description</small>#}-->
+<!--{#                                </div>#}-->
+<!--{#                                <span class="text-muted">$12</span>#}-->
+<!--{#                            </li>#}-->
+<!--{#                            <li class="list-group-item d-flex justify-content-between lh-condensed">#}-->
+<!--{#                                <div>#}-->
+<!--{#                                    <h6 class="my-0">Second product</h6>#}-->
+<!--{#                                    <small class="text-muted">Brief description</small>#}-->
+<!--{#                                </div>#}-->
+<!--{#                                <span class="text-muted">$8</span>#}-->
+<!--{#                            </li>#}-->
+<!--{#                            <li class="list-group-item d-flex justify-content-between lh-condensed">#}-->
+<!--{#                                <div>#}-->
+<!--{#                                    <h6 class="my-0">Third item</h6>#}-->
+<!--{#                                    <small class="text-muted">Brief description</small>#}-->
+<!--{#                                </div>#}-->
+<!--{#                                <span class="text-muted">$5</span>#}-->
+<!--{#                            </li>#}-->
+<!--{#                            <li class="list-group-item d-flex justify-content-between bg-light">#}-->
+<!--{#                                <div class="text-success">#}-->
+<!--{#                                    <h6 class="my-0">Promo code</h6>#}-->
+<!--{#                                    <small>EXAMPLECODE</small>#}-->
+<!--{#                                </div>#}-->
+<!--{#                                <span class="text-success">-$5</span>#}-->
+<!--{#                            </li>#}-->
+<!--{#                            <li class="list-group-item d-flex justify-content-between">#}-->
+<!--{#                                <span>Total (USD)</span>#}-->
+<!--{#                                <strong>$20</strong>#}-->
+<!--{#                            </li>#}-->
+<!--{#                        </ul>#}-->
+<!--{#                        <form class="card p-2">#}-->
+<!--{#                            <div class="input-group">#}-->
+<!--{#                                <input type="text" class="form-control" placeholder="Promo code">#}-->
+<!--{#                                <div class="input-group-append">#}-->
+<!--{#                                    <button type="submit" class="btn btn-secondary">Redeem</button>#}-->
+<!--{#                                </div>#}-->
+<!--{#                            </div>#}-->
+<!--{#                        </form>#}-->
+    <div class="container wow fadeIn">
+      <h2 class="my-2 h2" style="padding-left:20%;font-weight:bold;color:#32325d">Checkout form</h2>
+      <div class="row">
+        <div class="col-md-8 mb-4">
+          <div class="card">
+              <form method="POST" action="" class="card-body">
+                  {% csrf_token %}
+
+                  <h3 style=" color:blue;font-weight:bold">Billing Address</h3><br>
+                  <div class="md-form mb-5">
+                    <label for="full_name" class="">Full Name*</label>
+                    <input type='text' placeholder='smith john' id='Full_Name' name='Full_Name' class='form-control' required/>
+                  </div>
+                  <div class="md-form mb-5">
+                    <label for="billing_address" class="">Address*</label>
+                  <input type='text' placeholder='1234 Main St' id='billing_address' name='billing_address' class='form-control' required/>
+                </div>
+
+                <div class="md-form mb-5">
+                      <label for="billing_address2" class="">Address 2 (optional)</label>
+                  <input type='text' placeholder='Apartment or suite' id='billing_address2' name='billing_address2' class='form-control' />
+
+                </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="country">Country*</label>
+                             {{ form.bill_country }}
+                            <div class="invalid-feedback">
+                                Please select a valid country.
+                            </div>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                                        <label for="State">State*</label>
+                                      <select name="State"  class="form-control" id="State" placeholder="Delhi" required>
+                                      <option value="volvo">Jharkhnad</option>
+                                      <option value="saab">Jaipur</option>
+                                      <option value="opel">Delhi</option>
+                                      <option value="audi">Bihar</option>
+                                    </select>
+                                    </div>
+                                </div>
+                            <div class="row">
+                              <div class="col-md-4 mb-3">
+                                  <label for="city">City*</label>
+                                  <select name="city"  class="form-control" id="city" placeholder="Bokaro" required>
+                                      <option value="volvo">Jhamshedpur</option>
+                                      <option value="opel">Bokaro</option>
+                                      <option value="audi">Darbhanga</option>
+                                    </select>
+                              </div>
+                             <div class="col-md-3 mb-5">
+                                    <label for="zip">Zip*</label>
+                                    <input type="text" class="form-control" id="zip" placeholder="110980" required>
+                                    <div class="invalid-feedback">
+                                        Zip code required.
+                                    </div>
+                                </div>
+          </div>
+                            <hr class="mb-4">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="same_billing_add" id="same-address">
+                                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="save_info" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                            </div>
+                           <hr class="mb-4">
+                           <h4>Payment option</h4>
+                              <div class="d-block my-3">
+                            {% for value, name in form.fields.payment_op.choices %}
+                            <div class="custom-control custom-radio">
+                              <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                              <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                            </div>
+                            {% endfor %}
+                          </div>
+                            <hr class="mb-4">
+                            <button href="payment/"class="btn btn-primary btn-lg btn-block" type="submit">
+                                <i class="fa fa-credit-card"></i> Continue to checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-3" id="suggested-items">
+            <div class="container">
+                <div class="p-3 mb-2 bg-dark text-white">You May Also Like</div>
+                <div class="row">
+                    <div class="col col-md-3 d-flex mb-2">
+                        <div class="card">
+                            <img class="card-img-top img-fluid border-bottom" src="#" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ladies Sandal</h5>
+                                <p class="card-text">Exhibit a great fashion sense wearing these heels from the house of O.T. Collection.
+                                </p>
+                                <a href="#" class="btn btn-success">$23.99</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-flex mb-2">
+                        <div class="card">
+                            <img class="card-img-top img-fluid border-bottom" src="#" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Gents Shoes</h5>
+                                <p class="card-text">Make the rest look at you in admiration as you make your way by wearing these van sneakers
+                                    from ASB.</p>
+                                <a href="#" class="btn btn-success">$45.50</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-flex mb-2">
+                        <div class="card">
+                            <img class="card-img-top img-fluid border-bottom" src="#" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Ladies Sandal</h5>
+                                <p class="card-text">Exhibit a great fashion sense wearing these heels from the house of O.T. Collection.
+                                </p>
+                                <a href="#" class="btn btn-success">$53.99</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 d-flex mb-2">
+                        <div class="card">
+                            <img class="card-img-top img-fluid border-bottom" src="#" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Gents Shoes</h5>
+                                <p class="card-text">Make the rest look at you in admiration as you make your way by wearing these van sneakers
+                                    from ASB.</p>
+                                <a href="#" class="btn btn-success">$95.50</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <a href="#" class="btn btn-primary scrollUp">
+            <i class="fa fa-arrow-circle-o-up"></i>
+        </a>
+    </main>
+    <!-- Footer -->
+    <footer id="footer">
+        <p class="copyright">Made with
+            <i class="fa fa-heart"></i> By
+            <a target="_blank" title="Orbit Themes" href="http://www.orbitthemes.com">Orbit Themes</a> &copy;
+            <span id="currentYear"></span> All Rights Reserved.
+        </p>
+        <div class="social">
+            <a traget="_blank" href="https://facebook.com/orbitthemes" title="facebook">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <a traget="_blank" href="https://twitter.com/orbitthemes" title="twitter">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a traget="_blank" href="https://plus.google.com/+orbitthemes" title="Google+" target="_blank">
+                <i class="fa fa-google-plus"></i>
+            </a>
+            <a traget="_blank" href="https://github.com/orbitthemes" title="github" target="_blank">
+                <i class="fa fa-github"></i>
+            </a>
+            <a traget="_blank" href="https://www.behance.net/orbitthemes" title="Behance" target="_blank">
+                <i class="fa fa-behance"></i>
+            </a>
+            <a traget="_blank" href="https://dribbble.com/orbitthemes" title="Dribbble" target="_blank">
+                <i class="fa fa-dribbble"></i>
+            </a>
+            <a traget="_blank" href="https://www.pinterest.com/orbitThemes/" title="Pinterest" target="_blank">
+                <i class="fa fa-pinterest"></i>
+            </a>
+            <a traget="_blank" href="https://www.reddit.com/user/orbitthemes" title="Reddit" target="_blank">
+                <i class="fa fa-reddit"></i>
+            </a>
+            <a traget="_blank" href="https://orbitthemes.com/blog/" title="RSS" target="_blank">
+                <i class="fa fa-rss"></i>
+            </a>
+        </div></footer></div>
+    </footer>
+</body>
+
+</html>
+{% endblock body %}

@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'scss/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'scss/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+  </head>
+  <body class="body bg">
+  <div class="container">
+      <div class="  col-md-6 col-lg-6">
+          <div class="shadow-lg p-3 mb-5 rounded">
+              <div class="card">
+                  <div class="card-body">
+                        <h1 class="title">logIn</h1>
+                      <form  action="login" method="POST">
+                             {% csrf_token %}
+                           <div class="form-group">
+                               <label>username</label>
+                               <input type="text" name="username" class="form-control">
+                           </div>
+                           <div class="form-group">
+                               <label>password</label>
+                               <input type="password" name="password1" class="form-control">
+                           </div>
+                              <div>
+                           {% if messages %}
+                           <ul class="message">
+                                {% for message in messages %}
+                                    {{ message}}
+                                {% endfor %}
+                            </ul>
+                           </div>
+                           {% endif %}
+                          <input type="submit" value="login" class="btn btn-primary btn-block btn-lg">
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </body>
+</html>
