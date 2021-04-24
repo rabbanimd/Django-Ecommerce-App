@@ -65,13 +65,13 @@
                               <i class="fa fa-shopping-cart"></i>
                            </a>
                     {% endif %}
-                     <ul class="rating">
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star"></li>
-                    <li class="fa fa-star  "></li>
-                </ul>
+                     <div class="product-rating">
+                                <i  style="font-size:15px;color:#FFB656;" class="fa fa-star{% if item.avaregereview < 1%}-o empty{% endif%}"></i>
+                                <i  style="font-size:15px;color:#FFB656;" class="fa fa-star{% if item.avaregereview < 2%}-o empty{% endif%}"></i>
+                                <i  style="font-size:15px;color:#FFB656;" class="fa fa-star{% if item.avaregereview < 3%}-o empty{% endif%}"></i>
+                                <i  style="font-size:15px;color:#FFB656;" class="fa fa-star{% if item.avaregereview < 4%}-o empty{% endif%}"></i>
+                                <i  style="font-size:15px;color:#FFB656;" class="fa fa-star{% if item.avaregereview < 5%}-o empty{% endif%}"></i>
+                </div>
                 </div>
             </div>
         </div>{% endfor %}

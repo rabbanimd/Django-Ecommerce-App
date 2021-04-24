@@ -1,49 +1,32 @@
 {% load static %}
-<!doctype html>
+{% block content %}
 <html lang="en">
-  <head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/register.css'%}">
+</head>
+{%block body%}
+   <div class="wrap">
+   <h2>Sign Up</h2>
+    <form  action="login" method="POST">
+     {% csrf_token %}
+    <input type="text" placeholder="username" name="username" required><br><br>
+    <input type="password" placeholder="password" name="password1" required><br><br>
+    <input type="submit" value="login">
+         {% if messages %}
+       <ul class="message">
+            {% for message in messages %}
+                {{ message}}
+            {% endfor %}
+        </ul>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <a href="{% url 'register' %}" style="padding-left: 40%;text-decoration:none;color:darkblue;">Sign up</a>
+       </div>
+       {% endif %}
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'scss/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'scss/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-
-  </head>
-  <body class="body bg">
-  <div class="container">
-      <div class="  col-md-6 col-lg-6">
-          <div class="shadow-lg p-3 mb-5 rounded">
-              <div class="card">
-                  <div class="card-body">
-                        <h1 class="title">logIn</h1>
-                      <form  action="login" method="POST">
-                             {% csrf_token %}
-                           <div class="form-group">
-                               <label>username</label>
-                               <input type="text" name="username" class="form-control">
-                           </div>
-                           <div class="form-group">
-                               <label>password</label>
-                               <input type="password" name="password1" class="form-control">
-                           </div>
-                              <div>
-                           {% if messages %}
-                           <ul class="message">
-                                {% for message in messages %}
-                                    {{ message}}
-                                {% endfor %}
-                            </ul>
-                           </div>
-                           {% endif %}
-                          <input type="submit" value="login" class="btn btn-primary btn-block btn-lg">
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </body>
-</html>
+    </form>
+   </div>
+{% endblock body%}
+{% endblock content %}

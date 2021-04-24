@@ -21,20 +21,13 @@
               <a class="nav-link" href="{% url 'register' %}">register <span class="sr-only">(current)</span></a>
             </li>
          <li class="nav-item active">
-                  <form class="inline" action="account/login" method="POST">
+                          <form class="inline" action="{% url 'login' %}" method="POST">
                       {% csrf_token %}
-                      <input type="text" placeholder="Username" name="username"  style="width:130px;">
-                      <input type="text" placeholder="Password" name="password1" style="width:130px;">
-                    <button class="btn btn-primary" type="submit">Login</button>
-                      <div>
-                           {% if messages %}
-                           <ul class="message">
-                                {% for message in messages %}
-                                    {{ message}}
-                                {% endfor %}
-                            </ul>
-                           </div>
-                           {% endif %}
+                      <input type="text" placeholder="Username" name="username"  style="outline: none;height:30px;width:130px;text-align:center;border-radius: 2px;box-shadow: none;border: solid 1px #c2c1c1;font-size: .7775rem;" required>
+                      <input type="password" placeholder="Password" name="password1" style="outline: none;height:30px;width:130px;text-align:center;box-shadow: none; border-radius: 2px;border: solid 1px #c2c1c1;font-size: .7775rem;" required>
+                      <button style="height:30px;box-shadow: none; border-radius: 2px;color:White;border: solid 1px #c2c1c1;font-size: .7775rem;transition: all .2s ease-in;background-color: #4a90e2!important;    text-shadow: none;
+                         border: none;width:70px;margin-top: 10px;text-align:center;" type="submit">Login</button>
+                     <div><a style="font-size: .7775rem; margin-left:200px;margin-top:-309px;color:white;" href="{% url 'Reset_pass_Request_email' %}" tabindex="4">change/Forgot Password</a>
 
                  </form>
 
@@ -68,9 +61,10 @@
         {% endif %}
         <form class="form-inline my-2 my-lg-0" method="POST" action="/search">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" id="search" type="search"  style="" name='query' value="query" placeholder="Search product..." aria-label="Search">
+            <input class="form-control mr-sm-2" id="search" type="search"  style="" name='query' placeholder="Search product..." aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i>Search</button>
         </form>
     </div>
 </nav>
+<br>
 {% endblock body %}

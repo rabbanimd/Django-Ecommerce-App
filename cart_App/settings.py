@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7s9ubef7eo3(amihcfid5+-l62%854lwo3x)n7+d0%%oq+cc_y'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run withnndjng debug turned on in production!
 DEBUG =True
 ALLOWED_HOSTS = []
 
@@ -36,7 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'crispy_forms',
+    'crispy_forms',
+    # 'rest_framework',
+    'rest_framework.authtoken',
+    'django_rest_resetpassword',
     'django_countries',
     'django_filters',
     'cart'
@@ -90,7 +93,14 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

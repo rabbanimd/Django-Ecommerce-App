@@ -111,7 +111,8 @@ nav {
 }
 
 
-.menu > li:hover .sub-menu {
+.menu > li:hover .sub-menu
+{
   transform: scale(1);
 }
 
@@ -123,6 +124,9 @@ nav {
   background-color: #8ca4b4;
   color: white;
   text-align: center;
+}
+.add{
+ margin-top:-5%;
 }
 
 

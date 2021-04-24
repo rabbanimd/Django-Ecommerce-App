@@ -9,7 +9,7 @@ h3.h3
     text-align:center;
     background-color: #ef5777;
     padding:0 0 72px;
-    margin-top: 12px;
+    margin-top: -12px;
     border:1px solid rgba(0,0,0,.1);overflow:hidden;position:relative;z-index:1}
 .product-grid .product-image
 {
@@ -111,3 +111,13 @@ input[type=text],input[type=password]{
     border:none;
     width:150px;
 }
+
+.product-reviews
+{
+margin-left:1000%;
+}
+.alert alert-success
+{
+    margin-top: 50px;
+}
+

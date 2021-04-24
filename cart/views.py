@@ -11,7 +11,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from .models import items, OrderItem, Order, address, payment, Category
+from .models import items, OrderItem, Order, Address, payment, Category,Comment,CommentForm
 from django.db.models import Q
 from itertools import chain
 import stripe
@@ -34,6 +34,11 @@ class HomeView(ListView):
 class ItemDetailView(DetailView):
     model = items
     template_name = "cart.html"
+    def get_context_data(self, **kwargs):
+        context = super(ItemDetailView, self).get_context_data(**kwargs)
+        context['comments'] = Comment.objects.filter()
+        context['product'] = self.queryset
+        return context
 
 def categories(request, category_slug=None):
     category=None
@@ -53,7 +58,6 @@ def product(request,slug,id):
         'products': products,
     }
     return render(request, 'cart.html', context)
-
 
 @login_required
 def add_item(request, slug):
@@ -107,7 +111,6 @@ def delete_item(request, slug):
         messages.info(request, "You do not have an active order")
         return redirect("cart:product", slug=slug)
 
-
 class order_details(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
@@ -119,6 +122,9 @@ class order_details(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             messages.warning(self.request, "cart is Empty")
             return redirect("cart:order_details")
+@login_required()
+def add_qty():
+    pass
 
 
 @login_required()
@@ -147,43 +153,56 @@ def remove_qty(request, slug):
 
 class checkout(View):
 
+    print("I am here in VIew")
     def get(self, *args, **kwargs):
+        order = Order.objects.get(user = self.request.user,ordered=False)
         form = checkout_form()
         context = {
-            'form': form
+            'form': form,
+            'order':order,
            }
         return render(self.request, "checkout.html", context)
 
-    def post(self, *args, **kwargs):
-        # if self.request . method== 'POST' :
-        form = checkout_form(self.request.POST or None)
+    def post(self,request, *args, **kwargs):
+        form=checkout_form(self.request.POST or None)
         try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
+            if request.method == 'POST':
+                form = checkout_form(self.request.POST or None)
             if form.is_valid():
-                st_address = form.cleaned_data.get('st_address')
-                home_address = form.cleaned_data.get('home_address2')
-                country = form.cleaned_data.get('country')
-                zip = form.cleaned_data.get('zip')
-                # same_billing_add = form.cleaned_data.get('same_billing_add')
-                # save_info = form.cleaned_data.get('save_info')
-                payment_op = form.cleaned_data.get('payment_op')
-                billing_address = address(
-                    user=self.request.user,
-                    st_address=st_address,
-                    home_address=home_address,
-                    country=country,
-                    zip=zip
-                )
-                billing_address.save()
-                order.billing_address = billing_address
-                order.save()
-                return redirect('cart:checkout')
-            messages.warning(self.request, "failed to checkout")
+                    print("IS VALID@@@@@@")
+                    full_name =form.cleaned_data.get('full_name')
+                    address = form.cleaned_data.get('address')
+                    address2 = form.cleaned_data.get('address2')
+                    country = form.cleaned_data.get('country')
+                    state = form.cleaned_data.get('state')
+                    city = form.cleaned_data.get('city')
+                    zip = form.cleaned_data.get('zip')
+                    # # same_billing_add = form.cleaned_data.get('same_billing_add')
+                    # # save_info = form.cleaned_data.get('save_info')
+                    # payment_op = form.cleaned_data.get('payment_op')
+                    print(full_name,address,address2,country,state,city,zip)
+                    bill_address = Address(
+                        user=self.request.user,
+                        full_name =full_name,
+                        address=address,
+                        address2=address2,
+                        country=country,
+                        state = state,
+                        city=city,
+                        zip=zip,
+
+                    )
+                    bill_address.save()
+                    # form.save()
+
+                    messages.info(request,"Address Saved Successfully!")
+                    return redirect("cart:checkout")
+            messages.warning(request,"failed to checkout")
             return redirect("cart:checkout")
-            return render(self.request, "order_details.html", context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "cart is Empty")
             return redirect("cart:order_details")
+
 
 
 class payment(View):
@@ -268,3 +287,21 @@ def search(request):
             return render(request,'search.html',context)
 
     #
+def comment(request,id):
+    url = request.META.get('HTTP_REFERER')  # get last url
+    #return HttpResponse(url)
+    if request.method == 'POST':  # check post
+      form = CommentForm(request.POST)
+      if form.is_valid():
+         data = Comment()  # create relation with model
+         # data.subject = form.cleaned_data['subject']
+         data.comment = form.cleaned_data['comment']
+         data.rate = form.cleaned_data['rate']
+         data.ip = request.META.get('REMOTE_ADDR')
+         data.item_id=id
+         current_user= request.user
+         data.user_id=current_user.id
+         data.save()  # save data to table
+         messages.success(request, "Your review has ben sent. Thank you for your interest.")
+         return HttpResponseRedirect(url)
+    return HttpResponseRedirect(url)
